@@ -66,10 +66,11 @@
             <p>&nbsp;</p>
 
             @if ($product->quantity > 0)
-                <form action="{{ route('cart.store', $product) }}" method="POST">
+                <form action="" method="POST">
                     {{ csrf_field() }}
-                    <button type="submit" class="button button-plain">Add to Cart</button>
+                    <button type="submit" class="button button-plain">Purchase</button>
                 </form>
+                <a href="{{ route('checkout.index') }}">hola</a>
             @endif
         </div>
     </div> <!-- end product-section -->

@@ -151,7 +151,7 @@ class CheckoutController extends Controller
                     {
                     echo  "Charge Credit Card Null response returned";
                     }
-        return redirect('/');
+        return redirect('/thankyou');
     }
 
     protected function addToOrdersTables($request, $error)
