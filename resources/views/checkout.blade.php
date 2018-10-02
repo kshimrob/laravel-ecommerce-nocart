@@ -4,7 +4,7 @@
 
 @section('extra-css')
 
-<script src="https://js.stripe.com/v3/"></script>
+<!-- <script src="https://js.stripe.com/v3/"></script> -->
 
 @endsection
 
@@ -35,46 +35,6 @@
             <div>
                 <form action="{{ route('checkout.store') }}" method="POST" id="payment-form">
                     {{ csrf_field() }}
-                    <h2>Billing Details</h2>
-
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        @if (auth()->user())
-                            <input type="email" class="form-control" id="email" name="email" value="{{ auth()->user()->email }}" readonly>
-                        @else
-                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}" required>
-                    </div>
-
-                    <div class="half-form">
-                        <div class="form-group">
-                            <label for="city">City</label>
-                            <input type="text" class="form-control" id="city" name="city" value="{{ old('city') }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="province">Province</label>
-                            <input type="text" class="form-control" id="province" name="province" value="{{ old('province') }}" required>
-                        </div>
-                    </div> <!-- end half-form -->
-
-                    <div class="half-form">
-                        <div class="form-group">
-                            <label for="postalcode">Postal Code</label>
-                            <input type="text" class="form-control" id="postalcode" name="postalcode" value="{{ old('postalcode') }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}" required>
-                        </div>
-                    </div> <!-- end half-form -->
 
                     <div class="spacer"></div>
 
@@ -84,7 +44,7 @@
                         <label for="name_on_card">Name on Card</label>
                         <input type="text" class="form-control" id="name_on_card" name="name_on_card" value="">
                     </div>
-
+<!-- stripe stuff begins here -->
                     <div class="form-group">
                         <label for="card-element">
                           Credit or debit card
@@ -96,12 +56,85 @@
                         <!-- Used to display form errors -->
                         <div id="card-errors" role="alert"></div>
                     </div>
+<!-- stripe stuff ends here -->
                     <div class="spacer"></div>
 
                     <button type="submit" id="complete-order" class="button-primary full-width">Complete Order</button>
 
 
                 </form>
+                <form class="" action="{{ url('/checkout') }}" method="post">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
+                    </div>
+                    <h3>Billing Details</h3>
+                    <div class="half-form">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" class="form-control" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" name="lastName" required>
+                            </div>
+                        </div> <!-- end half-form -->
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}" required>
+                    </div>
+
+                    <div class="half-form">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city" name="city" value="{{ old('city') }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" class="form-control" id="state" name="state" value="{{ old('province') }}" required>
+                        </div>
+                    </div> <!-- end half-form -->
+                    <div class="half-form">
+                            <div class="form-group">
+                                <label for="postalcode">Postal Code</label>
+                                <input type="text" class="form-control" id="postalcode" name="postalcode" value="{{ old('postalcode') }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input type="text" class="form-control" id="country" name="country" value="{{ old('postalcode') }}" required>
+                            </div>
+                        </div> <!-- end half-form -->
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}" required>
+                    </div>
+                    <h3>Credit Card Information</h3>
+                    <div class="form-group">
+                        <label for="cnumber">Card Number</label>
+                        <input type="text" class="form-control" id="cnumber" name="cnumber" placeholder="Enter Card Number">
+                    </div>
+                    <div class="form-group">
+                      <label for="card-expiry-month">Expiration Month</label>
+                      {{ Form::selectMonth(null, null, ['name' => 'card_expiry_month', 'class' => 'form-control', 'required']) }}
+                    </div>
+                    <div class="form-group">
+                      <label for="card-expiry-year">Expiration Year</label>
+                      {{ Form::selectYear(null, date('Y'), date('Y') + 10, null, ['name' => 'card_expiry_year', 'class' => 'form-control', 'required']) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="ccode">Card Code</label>
+                        <input type="text" class="form-control" id="ccode" name="ccode" placeholder="Enter Card Code">
+                    </div>
+                    <div class="form-group">
+                        <label for="camount">Amount to be Charged</label>
+                        <input type="text" class="form-control" id="camount" name="camount" value="{{ str_replace('$', '', presentPrice($newTotal)) }}" readonly>
+                    </div>
+                    @foreach (Cart::content() as $item)
+                    <input type="hidden" id="description" name="description" value="{{ $item->model->name }}">
+                    @endforeach
+                    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
             </div>
 
 
@@ -145,11 +178,6 @@
 
                     <div class="checkout-totals-right">
                         {{ presentPrice(Cart::subtotal()) }} <br>
-                        @if (session()->has('coupon'))
-                            -{{ presentPrice($discount) }} <br>
-                            <hr>
-                            {{ presentPrice($newSubtotal) }} <br>
-                        @endif
                         {{ presentPrice($newTax) }} <br>
                         <span class="checkout-totals-total">{{ presentPrice($newTotal) }}</span>
 
@@ -163,6 +191,7 @@
 @endsection
 
 @section('extra-js')
+    <!-- stripe javascript
     <script>
         (function(){
             // Create a Stripe client
@@ -253,5 +282,5 @@
               form.submit();
             }
         })();
-    </script>
+    </script> -->
 @endsection

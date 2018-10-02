@@ -35,4 +35,8 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'authorize' => [
+        'login' => env('AUTHORIZE_PAYMENT_API_LOGIN_ID'),
+        'key' => env('AUTHORIZE_PAYMENT_TRANSACTION_KEY')
+    ]
 ];

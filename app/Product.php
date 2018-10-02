@@ -2,13 +2,13 @@
 
 namespace App;
 
-use Laravel\Scout\Searchable;
+// use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Product extends Model
 {
-    use SearchableTrait, Searchable;
+    use SearchableTrait;
 
     protected $fillable = ['quantity'];
 

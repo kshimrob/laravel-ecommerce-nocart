@@ -17,7 +17,10 @@
         "laravel/scout": "^4.0",
         "laravel/tinker": "~1.0",
         "nicolaslopezj/searchable": "^1.9",
-        "tcg/voyager": "1.1.*"
+        "tcg/voyager": "1.1.*",
+        "ext-curl": "*",
+        "authorizenet/authorizenet": "~1.9.6",
+        "laravelcollective/html": "^5.4.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

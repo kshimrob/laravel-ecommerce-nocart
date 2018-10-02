@@ -12,6 +12,8 @@ use App\Http\Requests\CheckoutRequest;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Cartalyst\Stripe\Exception\CardErrorException;
+use net\authorize\api\contract\v1 as AnetAPI;
+use net\authorize\api\controller as AnetController;
 
 class CheckoutController extends Controller
 {
@@ -22,16 +24,7 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        if (Cart::instance('default')->count() == 0) {
-            return redirect()->route('shop.index');
-        }
-
-        if (auth()->user() && request()->is('guestCheckout')) {
-            return redirect()->route('checkout.index');
-        }
-
         return view('checkout')->with([
-            'discount' => getNumbers()->get('discount'),
             'newSubtotal' => getNumbers()->get('newSubtotal'),
             'newTax' => getNumbers()->get('newTax'),
             'newTotal' => getNumbers()->get('newTotal'),
@@ -84,6 +77,81 @@ class CheckoutController extends Controller
             $this->addToOrdersTables($request, $e->getMessage());
             return back()->withErrors('Error! ' . $e->getMessage());
         }
+    }
+
+    public function chargeCreditCard(Request $request)
+    {
+        // Common setup for API credentials
+        $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
+        $merchantAuthentication->setName(config('services.authorize.login'));
+        $merchantAuthentication->setTransactionKey(config('services.authorize.key'));
+        $refId = 'ref'.time();
+
+        // Create the payment data for a credit card
+        $creditCard = new AnetAPI\CreditCardType();
+        $creditCard->setCardNumber($request->cnumber);
+
+        // Create order information
+        $order = new AnetAPI\OrderType();
+        $order->setDescription($request->description);
+
+        // $creditCard->setExpirationDate( "2038-12");
+        $expiry = $request->card_expiry_year . '-' . $request->card_expiry_month;
+        $creditCard->setExpirationDate($expiry);
+        $paymentOne = new AnetAPI\PaymentType();
+        $paymentOne->setCreditCard($creditCard);
+
+        // Set the customer's identifying information
+        $customerData = new AnetAPI\CustomerDataType();
+        $customerData->setEmail($request->email);
+
+        // Set the customer's Bill To address
+        $customerAddress = new AnetAPI\CustomerAddressType();
+        $customerAddress->setFirstName($request->firstName);
+        $customerAddress->setLastName($request->lastName);
+        $customerAddress->setAddress($request->address);
+        $customerAddress->setCity($request->city);
+        $customerAddress->setState($request->state);
+        $customerAddress->setZip($request->postalcode);
+        $customerAddress->setCountry($request->country);
+
+        // Create a transaction
+        $transactionRequestType = new AnetAPI\TransactionRequestType();
+        $transactionRequestType->setTransactionType("authCaptureTransaction");
+        $transactionRequestType->setAmount($request->camount);
+        $transactionRequestType->setOrder($order);
+        $transactionRequestType->setPayment($paymentOne);
+        $transactionRequestType->setBillTo($customerAddress);
+        $transactionRequestType->setCustomer($customerData);
+        $request = new AnetAPI\CreateTransactionRequest();
+        $request->setMerchantAuthentication($merchantAuthentication);
+        $request->setRefId( $refId);
+        $request->setTransactionRequest($transactionRequestType);
+        $controller = new AnetController\CreateTransactionController($request);
+        $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::SANDBOX);
+        
+
+        // decrease the quantities of all the products in the cart
+        $this->decreaseQuantities();
+
+        if ($response != null)
+                    {
+                    $tresponse = $response->getTransactionResponse();
+                    if (($tresponse != null) && ($tresponse->getResponseCode()=="1"))
+                    {
+                        echo "Charge Credit Card AUTH CODE : " . $tresponse->getAuthCode() . "\n";
+                        echo "Charge Credit Card TRANS ID  : " . $tresponse->getTransId() . "\n";
+                    }
+                    else
+                    {
+                        echo "Charge Credit Card ERROR :  Invalid response\n";
+                    }
+                    }
+                    else
+                    {
+                    echo  "Charge Credit Card Null response returned";
+                    }
+        return redirect('/');
     }
 
     protected function addToOrdersTables($request, $error)

@@ -18,7 +18,10 @@ Route::post('/coupon', 'CouponsController@store')->name('coupon.store');
 Route::delete('/coupon', 'CouponsController@destroy')->name('coupon.destroy');
 
 Route::get('/checkout', 'CheckoutController@index')->name('checkout.index')->middleware('auth');
-Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
+Route::post('/checkout', 'CheckoutController@chargeCreditCard')->name('checkout.store');
+
+Route::get('/testcheckout', 'AuthorizeController@index');
+Route::post('/testcheckout', 'AuthorizeController@chargeCreditCard');
 
 Route::get('/guestCheckout', 'CheckoutController@index')->name('guestCheckout.index');
 
