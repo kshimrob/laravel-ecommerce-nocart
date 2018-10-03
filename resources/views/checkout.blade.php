@@ -31,7 +31,10 @@
         @endif
 {{-- end don't know --}}
         <h1 class="checkout-heading stylish-heading">Checkout</h1>
-        <h2 class="product-section-title">{{ $product->name }}</h2>
+        <div class="product-section-information">
+            <h2 class="product-section-title">{{ $product->name }}</h2>
+            <p>{{ $product->details }}</p>
+        </div>
         <div class="checkout-section">
             <div>
                 <form action="{{ route('checkout.store') }}" method="POST" id="payment-form">
@@ -129,7 +132,7 @@
                     </div>
                     <div class="form-group">
                         <label for="camount">Amount to be Charged</label>
-                        <input type="text" class="form-control" id="camount" name="camount" value="{{ str_replace('$', '', presentPrice($newTotal)) }}" readonly>
+                        <input type="text" class="form-control" id="camount" name="camount" value="{{ str_replace('$', '', $product->priceWithTax()) }}" readonly>
                     </div>
                     @foreach (Cart::content() as $item)
                     <input type="hidden" id="description" name="description" value="{{ $item->model->name }}">
@@ -144,44 +147,36 @@
                 <h2>Your Order</h2>
 
                 <div class="checkout-table">
-                    @foreach (Cart::content() as $item)
+                    {{--@foreach (Cart::content() as $item)--}}
                     <div class="checkout-table-row">
                         <div class="checkout-table-row-left">
-                            <img src="{{ productImage($item->model->image) }}" alt="item" class="checkout-table-img">
+                            <img src="{{ productImage($product->image) }}" alt="item" class="checkout-table-img">
                             <div class="checkout-item-details">
-                                <div class="checkout-table-item">{{ $item->model->name }}</div>
-                                <div class="checkout-table-description">{{ $item->model->details }}</div>
-                                <div class="checkout-table-price">{{ $item->model->presentPrice() }}</div>
+                                <div class="checkout-table-item">{{ $product->name }}</div>
+                                <div class="checkout-table-description">{{ $product->details }}</div>
+                                <div class="checkout-table-price">{{ $product->presentPrice() }}</div>
                             </div>
                         </div> <!-- end checkout-table -->
 
                         <div class="checkout-table-row-right">
-                            <div class="checkout-table-quantity">{{ $item->qty }}</div>
+                            <div class="checkout-table-quantity">{{ $product->qty }}</div>
                         </div>
                     </div> <!-- end checkout-table-row -->
-                    @endforeach
+                    {{--@endforeach--}}
 
                 </div> <!-- end checkout-table -->
 
                 <div class="checkout-totals">
                     <div class="checkout-totals-left">
                         Subtotal <br>
-                        @if (session()->has('coupon'))
-                            Discount ({{ session()->get('coupon')['name'] }}) :
-                            <br>
-                            <hr>
-                            New Subtotal <br>
-                        @endif
                         Tax ({{config('cart.tax')}}%)<br>
                         <span class="checkout-totals-total">Total</span>
-
                     </div>
 
                     <div class="checkout-totals-right">
-                        {{ presentPrice(Cart::subtotal()) }} <br>
-                        {{ presentPrice($newTax) }} <br>
-                        <span class="checkout-totals-total">{{ presentPrice($newTotal) }}</span>
-
+                        {{ $product->presentPrice() }} <br>
+                        {{ $product->taxCost() }} <br>
+                        <span class="checkout-totals-total">{{ $product->priceWithTax() }}</span>
                     </div>
                 </div> <!-- end checkout-totals -->
             </div>

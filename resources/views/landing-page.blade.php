@@ -84,7 +84,9 @@
 
             </div> <!-- end featured-section -->
 
-            <blog-posts></blog-posts>
+            <div class="blog-posts-preview">
+                <h1>Inspiring Stories</h1>
+            </div>
 
             @include('partials.footer')
 

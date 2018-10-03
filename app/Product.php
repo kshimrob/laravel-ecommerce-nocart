@@ -42,9 +42,22 @@ class Product extends Model
         return money_format('$%i', $this->price / 100);
     }
 
+    public function taxCost()
+    {
+        $tax = 13;
+        return money_format('$%i', $this->price * $tax / 10000);
+    }
+
+    public function priceWithTax()
+    {
+        $tax = 13;
+        $finalTotal = ($this->price / 100) + ($this->price * $tax / 10000);
+        return money_format('$%i', $finalTotal);
+    }
+
     public function quantityMultiply($quantity)
     {
-        return money_format('$%i', $this->price * $quantity / 100);
+        return $this->price * $quantity;
     }
 
     public function scopeMightAlsoLike($query)
