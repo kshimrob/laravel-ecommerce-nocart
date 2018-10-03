@@ -86,6 +86,15 @@
 
             <div class="blog-posts-preview">
                 <h1>Inspiring Stories</h1>
+                @foreach ($posts as $post)
+                    <div class="col-md-3">
+                        <a href="{{ route('post.show', $post->slug) }}">
+                            <img src="{{ Voyager::image( $post->image ) }}">
+                            <h3>{{ $post->title }}</h3>
+                            <p>{{ $post->excerpt }}</p>
+                        </a>
+                    </div>
+                @endforeach
             </div>
 
             @include('partials.footer')

@@ -10,6 +10,7 @@ Route::post('/checkout', 'CheckoutController@chargeCreditCard')->name('checkout.
 
 Route::get('/thankyou', 'ConfirmationController@index')->name('confirmation.index');
 
+Route::get('/post/{slug}', 'PostController@show')->name('post.show');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

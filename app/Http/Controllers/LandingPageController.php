@@ -16,7 +16,7 @@ class LandingPageController extends Controller
     public function index()
     {
         $products = Product::where('featured', true)->take(8)->inRandomOrder()->get();
-        $posts = Post::all()->take(3)->inRandomOrder()->get();
+        $posts = Post::where('status', 'PUBLISHED')->take(3)->inRandomOrder()->get();
         return view('landing-page')->with([
             'products' => $products,
             'posts' => $posts,
