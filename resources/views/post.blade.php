@@ -13,7 +13,11 @@
         <img src="{{ Voyager::image( $post->image ) }}" style="width:100%">
         <h1>{{ $post->title }}</h1>
         <div class="single-post-categories">
-
+					<ul>
+					@foreach ($post->categories as $category)
+      			<li><a href="{{ route('postcategory.show', $category->slug) }}">{{ $category->name }}</a></li>
+        	@endforeach
+					</ul>
         </div>
         <p class="post-published">Published on {{ $post->published_on }}</p>
 				<p>{!! $post->body !!}</p>
