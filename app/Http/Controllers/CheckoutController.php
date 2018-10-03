@@ -22,12 +22,24 @@ class CheckoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    // public function index($slug)
+    // {
+    //     $product = Product::where('slug', $slug)->firstOrFail();
+    //     return view('checkout')->with([
+    //         'newSubtotal' => getNumbers()->get('newSubtotal'),
+    //         'newTax' => getNumbers()->get('newTax'),
+    //         'newTotal' => getNumbers()->get('newTotal'),
+    //         'product' => $product,
+    //     ]);
+    // }
+    public function show($slug)
     {
+        $product = Product::where('slug', $slug)->firstOrFail();
         return view('checkout')->with([
             'newSubtotal' => getNumbers()->get('newSubtotal'),
             'newTax' => getNumbers()->get('newTax'),
             'newTotal' => getNumbers()->get('newTotal'),
+            'product' => $product,
         ]);
     }
 
@@ -45,38 +57,38 @@ class CheckoutController extends Controller
             return back()->withErrors('Sorry! One of the items in your cart is no longer avialble.');
         }
 
-        $contents = Cart::content()->map(function ($item) {
-            return $item->model->slug.', '.$item->qty;
-        })->values()->toJson();
+        // $contents = Cart::content()->map(function ($item) {
+        //     return $item->model->slug.', '.$item->qty;
+        // })->values()->toJson();
 
-        try {
-            $charge = Stripe::charges()->create([
-                'amount' => getNumbers()->get('newTotal') / 100,
-                'currency' => 'CAD',
-                'source' => $request->stripeToken,
-                'description' => 'Order',
-                'receipt_email' => $request->email,
-                'metadata' => [
-                    'contents' => $contents,
-                    'quantity' => Cart::instance('default')->count(),
-                    'discount' => collect(session()->get('coupon'))->toJson(),
-                ],
-            ]);
+        // try {
+        //     $charge = Stripe::charges()->create([
+        //         'amount' => getNumbers()->get('newTotal') / 100,
+        //         'currency' => 'CAD',
+        //         'source' => $request->stripeToken,
+        //         'description' => 'Order',
+        //         'receipt_email' => $request->email,
+        //         'metadata' => [
+        //             'contents' => $contents,
+        //             'quantity' => Cart::instance('default')->count(),
+        //             'discount' => collect(session()->get('coupon'))->toJson(),
+        //         ],
+        //     ]);
 
-            $order = $this->addToOrdersTables($request, null);
-            Mail::send(new OrderPlaced($order));
+        //     $order = $this->addToOrdersTables($request, null);
+        //     Mail::send(new OrderPlaced($order));
 
-            // decrease the quantities of all the products in the cart
-            $this->decreaseQuantities();
+        //     // decrease the quantities of all the products in the cart
+        //     $this->decreaseQuantities();
 
-            Cart::instance('default')->destroy();
-            session()->forget('coupon');
+        //     Cart::instance('default')->destroy();
+        //     session()->forget('coupon');
 
-            return redirect()->route('confirmation.index')->with('success_message', 'Thank you! Your payment has been successfully accepted!');
-        } catch (CardErrorException $e) {
-            $this->addToOrdersTables($request, $e->getMessage());
-            return back()->withErrors('Error! ' . $e->getMessage());
-        }
+        //     return redirect()->route('confirmation.index')->with('success_message', 'Thank you! Your payment has been successfully accepted!');
+        // } catch (CardErrorException $e) {
+        //     $this->addToOrdersTables($request, $e->getMessage());
+        //     return back()->withErrors('Error! ' . $e->getMessage());
+        // }
     }
 
     public function chargeCreditCard(Request $request)

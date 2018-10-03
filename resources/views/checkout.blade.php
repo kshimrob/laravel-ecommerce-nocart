@@ -11,7 +11,7 @@
 @section('content')
 
     <div class="container">
-
+{{-- don't know --}}
         @if (session()->has('success_message'))
             <div class="spacer"></div>
             <div class="alert alert-success">
@@ -29,8 +29,9 @@
                 </ul>
             </div>
         @endif
-
+{{-- end don't know --}}
         <h1 class="checkout-heading stylish-heading">Checkout</h1>
+        <h2 class="product-section-title">{{ $product->name }}</h2>
         <div class="checkout-section">
             <div>
                 <form action="{{ route('checkout.store') }}" method="POST" id="payment-form">

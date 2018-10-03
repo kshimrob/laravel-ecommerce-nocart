@@ -64,13 +64,12 @@
             </p>
 
             <p>&nbsp;</p>
-
             @if ($product->quantity > 0)
-                <form action="" method="POST">
+                <a href="{{ route('checkout.show', $product->slug) }}">Purchase</a>
+                {{--<form action="{{ route('checkout.index', $product->slug) }}" method="POST">
                     {{ csrf_field() }}
                     <button type="submit" class="button button-plain">Purchase</button>
-                </form>
-                <a href="{{ route('checkout.index') }}">hola</a>
+                </form>--}}
             @endif
         </div>
     </div> <!-- end product-section -->
