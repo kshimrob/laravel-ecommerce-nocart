@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Select a Cause</title>
+	<title>{{ $cause->name }}</title>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
 
 	<div class="container">
-    <h1>Select a Cause</h1>
+    <h1>{{ $cause->name }}</h1>
 		<div class="row">
-      @foreach ($causes as $cause)
-			<div class="col-md-3">
         <img src="{{ Voyager::image( $cause->image ) }}" style="width:100%">
         <h2>{{ $cause->name }}</h2>
-        <p>{{ $cause->excerpt }}</p>
-        <p><a href="{{ route('causecheckout.show', $cause->slug) }}" target="_blank">Learn More</a></p>
-      </div>
-      @endforeach
+        <p>{!! $cause->description !!}</p>
 		</div>
 	</div>
 </body>
