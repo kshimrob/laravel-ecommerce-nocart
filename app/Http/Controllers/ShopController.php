@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Category;
+use App\Cause;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -52,14 +53,15 @@ class ShopController extends Controller
     public function show($slug)
     {
         $product = Product::where('slug', $slug)->firstOrFail();
-        $mightAlsoLike = Product::where('slug', '!=', $slug)->mightAlsoLike()->get();
+        // $mightAlsoLike = Product::where('slug', '!=', $slug)->mightAlsoLike()->get();
+        $cause = Cause::where('id', $product->cause)->firstOrFail();
 
         $stockLevel = getStockLevel($product->quantity);
 
         return view('product')->with([
             'product' => $product,
             'stockLevel' => $stockLevel,
-            'mightAlsoLike' => $mightAlsoLike,
+            'cause' => $cause,
         ]);
     }
 

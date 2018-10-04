@@ -39,19 +39,6 @@
             <div class="product-section-image">
                 <img src="{{ productImage($product->image) }}" alt="product" class="active" id="currentImage">
             </div>
-            <div class="product-section-images">
-                <div class="product-section-thumbnail selected">
-                    <img src="{{ productImage($product->image) }}" alt="product">
-                </div>
-
-                @if ($product->images)
-                    @foreach (json_decode($product->images, true) as $image)
-                    <div class="product-section-thumbnail">
-                        <img src="{{ productImage($image) }}" alt="product">
-                    </div>
-                    @endforeach
-                @endif
-            </div>
         </div>
         <div class="product-section-information">
             <h1 class="product-section-title">{{ $product->name }}</h1>
@@ -66,16 +53,14 @@
             <p>&nbsp;</p>
             @if ($product->quantity > 0)
                 <a href="{{ route('checkout.show', $product->slug) }}">Purchase</a>
-                {{--<form action="{{ route('checkout.index', $product->slug) }}" method="POST">
-                    {{ csrf_field() }}
-                    <button type="submit" class="button button-plain">Purchase</button>
-                </form>--}}
             @endif
         </div>
     </div> <!-- end product-section -->
-
-    @include('partials.might-like')
-
+    <div class="product-cause-section">
+        <img src="/{{ $cause->image }}">
+        <h2>{{ $cause->name }}</h2>
+        <div class="description">{!! $cause->description !!}</div>
+    </div>
 @endsection
 
 @section('extra-js')
