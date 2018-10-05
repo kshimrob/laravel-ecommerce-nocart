@@ -53,9 +53,9 @@ class CheckoutController extends Controller
     public function store(CheckoutRequest $request)
     {
         // Check race condition when there are less items available to purchase
-        if ($this->productsAreNoLongerAvailable()) {
-            return back()->withErrors('Sorry! One of the items in your cart is no longer avialble.');
-        }
+        // if ($this->productsAreNoLongerAvailable()) {
+        //     return back()->withErrors('Sorry! One of the items in your cart is no longer avialble.');
+        // }
 
         // $contents = Cart::content()->map(function ($item) {
         //     return $item->model->slug.', '.$item->qty;
@@ -93,6 +93,10 @@ class CheckoutController extends Controller
 
     public function chargeCreditCard(Request $request)
     {
+
+        // decrease the quantities of product by 1
+        $this->decreaseQuantities($request->productid);
+
         // Common setup for API credentials
         $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
         $merchantAuthentication->setName(config('services.authorize.login'));
@@ -142,9 +146,6 @@ class CheckoutController extends Controller
         $controller = new AnetController\CreateTransactionController($request);
         $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::SANDBOX);
         
-
-        // decrease the quantities of all the products in the cart
-        $this->decreaseQuantities();
 
         if ($response != null)
                     {
@@ -199,13 +200,12 @@ class CheckoutController extends Controller
         return $order;
     }
 
-    protected function decreaseQuantities()
+    protected function decreaseQuantities($id)
     {
-        foreach (Cart::content() as $item) {
-            $product = Product::find($item->model->id);
+            $product = Product::where('id', $id)->firstOrFail();
 
-            $product->update(['quantity' => $product->quantity - $item->qty]);
-        }
+            $product->update(['quantity' => $product->quantity - 1]);
+        
     }
 
     protected function productsAreNoLongerAvailable()

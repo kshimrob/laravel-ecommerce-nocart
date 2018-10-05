@@ -134,9 +134,7 @@
                         <label for="camount">Amount to be Charged</label>
                         <input type="text" class="form-control" id="camount" name="camount" value="{{ str_replace('$', '', $product->priceWithTax()) }}" readonly>
                     </div>
-                    @foreach (Cart::content() as $item)
-                    <input type="hidden" id="description" name="description" value="{{ $item->model->name }}">
-                    @endforeach
+                    <input type="hidden" id="productid" name="productid" value="{{ $product->id }}">
                     <button type="submit" class="btn btn-primary">Submit</button>
     </form>
             </div>
