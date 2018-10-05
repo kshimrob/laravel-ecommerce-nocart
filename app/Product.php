@@ -44,13 +44,13 @@ class Product extends Model
 
     public function taxCost()
     {
-        $tax = 13;
+        $tax = $this->fee;
         return money_format('$%i', $this->price * $tax / 10000);
     }
 
     public function priceWithTax()
     {
-        $tax = 13;
+        $tax = $this->fee;
         $finalTotal = ($this->price / 100) + ($this->price * $tax / 10000);
         return money_format('$%i', $finalTotal);
     }

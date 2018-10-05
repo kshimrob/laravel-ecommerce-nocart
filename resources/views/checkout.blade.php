@@ -169,7 +169,7 @@
                 <div class="checkout-totals">
                     <div class="checkout-totals-left">
                         Subtotal <br>
-                        Tax ({{config('cart.tax')}}%)<br>
+                        Fee ({{ $product->fee }}%)<br>
                         <span class="checkout-totals-total">Total</span>
                     </div>
 
