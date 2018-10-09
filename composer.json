@@ -9,18 +9,19 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "ext-curl": "*",
         "algolia/algoliasearch-client-php": "^1.25",
+        "authorizenet/authorizenet": "~1.9.6",
         "cartalyst/stripe-laravel": "^8.0",
         "fideloper/proxy": "~4.0",
         "gloudemans/shoppingcart": "^2.5",
         "laravel/framework": "5.6.*",
         "laravel/scout": "^4.0",
         "laravel/tinker": "~1.0",
+        "laravelcollective/html": "^5.4.0",
+        "maatwebsite/excel": "^3.1",
         "nicolaslopezj/searchable": "^1.9",
-        "tcg/voyager": "1.1.*",
-        "ext-curl": "*",
-        "authorizenet/authorizenet": "~1.9.6",
-        "laravelcollective/html": "^5.4.0"
+        "tcg/voyager": "1.1.*"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

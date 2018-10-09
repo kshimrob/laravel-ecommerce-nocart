@@ -11,25 +11,12 @@
 @section('content')
 
     <div class="container">
-{{-- don't know --}}
-        @if (session()->has('success_message'))
-            <div class="spacer"></div>
-            <div class="alert alert-success">
-                {{ session()->get('success_message') }}
+        @if (session('status'))
+            <div class="alert">
+                <p>{{ session('status') }}</p>
+                <p>Please <a href="{{ route('shop.show', $product->slug) }}">edit the number of tickets</a> you would like to purchase.</p>
             </div>
         @endif
-
-        @if(count($errors) > 0)
-            <div class="spacer"></div>
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{!! $error !!}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-{{-- end don't know --}}
         <h1 class="checkout-heading stylish-heading">Checkout</h1>
         <div class="product-section-information">
             <h2 class="product-section-title">{{ $product->name }}</h2>
@@ -37,36 +24,6 @@
         </div>
         <div class="checkout-section">
             <div>
-                <form action="{{ route('checkout.store') }}" method="POST" id="payment-form">
-                    {{ csrf_field() }}
-
-                    <div class="spacer"></div>
-
-                    <h2>Payment Details</h2>
-
-                    <div class="form-group">
-                        <label for="name_on_card">Name on Card</label>
-                        <input type="text" class="form-control" id="name_on_card" name="name_on_card" value="">
-                    </div>
-<!-- stripe stuff begins here -->
-                    <div class="form-group">
-                        <label for="card-element">
-                          Credit or debit card
-                        </label>
-                        <div id="card-element">
-                          <!-- a Stripe Element will be inserted here. -->
-                        </div>
-
-                        <!-- Used to display form errors -->
-                        <div id="card-errors" role="alert"></div>
-                    </div>
-<!-- stripe stuff ends here -->
-                    <div class="spacer"></div>
-
-                    <button type="submit" id="complete-order" class="button-primary full-width">Complete Order</button>
-
-
-                </form>
                 <form class="" action="{{ url('/checkout') }}" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
@@ -132,9 +89,10 @@
                     </div>
                     <div class="form-group">
                         <label for="camount">Amount to be Charged</label>
-                        <input type="text" class="form-control" id="camount" name="camount" value="{{ str_replace('$', '', $product->priceWithTax()) }}" readonly>
+                        <input type="text" class="form-control" id="camount" name="camount" value="{{ str_replace('$', '', $product->priceWithTax(str_replace('quantity=', '', $_SERVER['QUERY_STRING']))) }}" readonly>
                     </div>
                     <input type="hidden" id="productid" name="productid" value="{{ $product->id }}">
+                    <input type="hidden" id="ticketquantity" name="ticketquantity" value="{{ str_replace('quantity=', '', $_SERVER['QUERY_STRING']) }}">
                     <button type="submit" class="btn btn-primary">Submit</button>
     </form>
             </div>
@@ -165,16 +123,19 @@
                 </div> <!-- end checkout-table -->
 
                 <div class="checkout-totals">
+                    <a href="{{ route('shop.show', $product->slug) }}">Edit Quantity</a>
                     <div class="checkout-totals-left">
+                        Quantity <br>
                         Subtotal <br>
                         Fee ({{ $product->fee }}%)<br>
                         <span class="checkout-totals-total">Total</span>
                     </div>
 
                     <div class="checkout-totals-right">
-                        {{ $product->presentPrice() }} <br>
-                        {{ $product->taxCost() }} <br>
-                        <span class="checkout-totals-total">{{ $product->priceWithTax() }}</span>
+                        {{ str_replace('quantity=', '', $_SERVER['QUERY_STRING']) }} <br>
+                        {{ $product->priceWithQuantity(str_replace('quantity=', '', $_SERVER['QUERY_STRING'])) }} <br>
+                        {{ $product->taxCost(str_replace('quantity=', '', $_SERVER['QUERY_STRING'])) }} <br>
+                        <span class="checkout-totals-total">{{ $product->priceWithTax(str_replace('quantity=', '', $_SERVER['QUERY_STRING'])) }}</span>
                     </div>
                 </div> <!-- end checkout-totals -->
             </div>

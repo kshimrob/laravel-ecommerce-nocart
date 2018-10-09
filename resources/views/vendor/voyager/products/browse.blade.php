@@ -26,6 +26,7 @@
             <div class="col-md-12">
                 <div class="panel panel-bordered">
                     <div class="panel-body">
+                        <p><a href="/export">test</a></p>
                         @if ($isServerSide)
                             <form method="get">
                                 <div id="search-input">

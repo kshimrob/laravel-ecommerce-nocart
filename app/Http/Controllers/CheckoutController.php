@@ -93,84 +93,90 @@ class CheckoutController extends Controller
 
     public function chargeCreditCard(Request $request)
     {
+        if ($this->productNoLongerAvailable($request->productid, intval($request->ticketquantity))) {
+            // $product = Product::where('id', $request->productid)->firstOrFail();
+            return back()->withInput()->with('status', 'The most updated quantity of tickets is less than what you selected.');
+            //send an error message somehow
+        } else {
+            // decrease the quantities of product by 1
+            $this->decreaseQuantities($request->productid, intval($request->ticketquantity));
+    
+            // Common setup for API credentials
+            $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
+            $merchantAuthentication->setName(config('services.authorize.login'));
+            $merchantAuthentication->setTransactionKey(config('services.authorize.key'));
+            $refId = 'ref'.time();
+    
+            // Create the payment data for a credit card
+            $creditCard = new AnetAPI\CreditCardType();
+            $creditCard->setCardNumber($request->cnumber);
+    
+            // Create order information
+            $order = new AnetAPI\OrderType();
+            $order->setDescription($request->description);
+    
+            // $creditCard->setExpirationDate( "2038-12");
+            $expiry = $request->card_expiry_year . '-' . $request->card_expiry_month;
+            $creditCard->setExpirationDate($expiry);
+            $paymentOne = new AnetAPI\PaymentType();
+            $paymentOne->setCreditCard($creditCard);
+    
+            // Set the customer's identifying information
+            $customerData = new AnetAPI\CustomerDataType();
+            $customerData->setEmail($request->email);
+    
+            // Set the customer's Bill To address
+            $customerAddress = new AnetAPI\CustomerAddressType();
+            $customerAddress->setFirstName($request->firstName);
+            $customerAddress->setLastName($request->lastName);
+            $customerAddress->setAddress($request->address);
+            $customerAddress->setCity($request->city);
+            $customerAddress->setState($request->state);
+            $customerAddress->setZip($request->postalcode);
+            $customerAddress->setCountry($request->country);
+    
+            // Create a transaction
+            $transactionRequestType = new AnetAPI\TransactionRequestType();
+            $transactionRequestType->setTransactionType("authCaptureTransaction");
+            $transactionRequestType->setAmount($request->camount);
+            $transactionRequestType->setOrder($order);
+            $transactionRequestType->setPayment($paymentOne);
+            $transactionRequestType->setBillTo($customerAddress);
+            $transactionRequestType->setCustomer($customerData);
+            $request = new AnetAPI\CreateTransactionRequest();
+            $request->setMerchantAuthentication($merchantAuthentication);
+            $request->setRefId( $refId);
+            $request->setTransactionRequest($transactionRequestType);
+            $controller = new AnetController\CreateTransactionController($request);
+            $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::SANDBOX);
+            
+    
+            // if ($response != null)
+            //             {
+            //             $tresponse = $response->getTransactionResponse();
+            //             if (($tresponse != null) && ($tresponse->getResponseCode()=="1"))
+            //             {
+            //                 echo "Charge Credit Card AUTH CODE : " . $tresponse->getAuthCode() . "\n";
+            //                 echo "Charge Credit Card TRANS ID  : " . $tresponse->getTransId() . "\n";
+            //             }
+            //             else
+            //             {
+            //                 echo "Charge Credit Card ERROR :  Invalid response\n";
+            //             }
+            //             }
+            //             else
+            //             {
+            //             echo  "Charge Credit Card Null response returned";
+            //             }
+            return redirect('/thankyou');
 
-        // decrease the quantities of product by 1
-        $this->decreaseQuantities($request->productid);
-
-        // Common setup for API credentials
-        $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
-        $merchantAuthentication->setName(config('services.authorize.login'));
-        $merchantAuthentication->setTransactionKey(config('services.authorize.key'));
-        $refId = 'ref'.time();
-
-        // Create the payment data for a credit card
-        $creditCard = new AnetAPI\CreditCardType();
-        $creditCard->setCardNumber($request->cnumber);
-
-        // Create order information
-        $order = new AnetAPI\OrderType();
-        $order->setDescription($request->description);
-
-        // $creditCard->setExpirationDate( "2038-12");
-        $expiry = $request->card_expiry_year . '-' . $request->card_expiry_month;
-        $creditCard->setExpirationDate($expiry);
-        $paymentOne = new AnetAPI\PaymentType();
-        $paymentOne->setCreditCard($creditCard);
-
-        // Set the customer's identifying information
-        $customerData = new AnetAPI\CustomerDataType();
-        $customerData->setEmail($request->email);
-
-        // Set the customer's Bill To address
-        $customerAddress = new AnetAPI\CustomerAddressType();
-        $customerAddress->setFirstName($request->firstName);
-        $customerAddress->setLastName($request->lastName);
-        $customerAddress->setAddress($request->address);
-        $customerAddress->setCity($request->city);
-        $customerAddress->setState($request->state);
-        $customerAddress->setZip($request->postalcode);
-        $customerAddress->setCountry($request->country);
-
-        // Create a transaction
-        $transactionRequestType = new AnetAPI\TransactionRequestType();
-        $transactionRequestType->setTransactionType("authCaptureTransaction");
-        $transactionRequestType->setAmount($request->camount);
-        $transactionRequestType->setOrder($order);
-        $transactionRequestType->setPayment($paymentOne);
-        $transactionRequestType->setBillTo($customerAddress);
-        $transactionRequestType->setCustomer($customerData);
-        $request = new AnetAPI\CreateTransactionRequest();
-        $request->setMerchantAuthentication($merchantAuthentication);
-        $request->setRefId( $refId);
-        $request->setTransactionRequest($transactionRequestType);
-        $controller = new AnetController\CreateTransactionController($request);
-        $response = $controller->executeWithApiResponse(\net\authorize\api\constants\ANetEnvironment::SANDBOX);
-        
-
-        if ($response != null)
-                    {
-                    $tresponse = $response->getTransactionResponse();
-                    if (($tresponse != null) && ($tresponse->getResponseCode()=="1"))
-                    {
-                        echo "Charge Credit Card AUTH CODE : " . $tresponse->getAuthCode() . "\n";
-                        echo "Charge Credit Card TRANS ID  : " . $tresponse->getTransId() . "\n";
-                    }
-                    else
-                    {
-                        echo "Charge Credit Card ERROR :  Invalid response\n";
-                    }
-                    }
-                    else
-                    {
-                    echo  "Charge Credit Card Null response returned";
-                    }
-        return redirect('/thankyou');
+        }
     }
 
     protected function addToOrdersTables($request, $error)
     {
         // Insert into orders table
-        $order = Order::create([
+    $order = Order::create([
             'user_id' => auth()->user() ? auth()->user()->id : null,
             'billing_email' => $request->email,
             'billing_name' => $request->name,
@@ -200,23 +206,16 @@ class CheckoutController extends Controller
         return $order;
     }
 
-    protected function decreaseQuantities($id)
+    protected function decreaseQuantities($id, $quantity)
     {
             $product = Product::where('id', $id)->firstOrFail();
 
-            $product->update(['quantity' => $product->quantity - 1]);
-        
+            $product->update(['quantity' => $product->quantity - $quantity]);
     }
 
-    protected function productsAreNoLongerAvailable()
+    protected function checkIfZero($id)
     {
-        foreach (Cart::content() as $item) {
-            $product = Product::find($item->model->id);
-            if ($product->quantity < $item->qty) {
-                return true;
-            }
-        }
-
-        return false;
+        $product = Product::where('id', $id)->firstOrFail();
+        return $product->quantity == 0;
     }
 }

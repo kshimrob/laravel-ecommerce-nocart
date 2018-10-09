@@ -49,11 +49,19 @@
             <p>
                 {!! $product->description !!}
             </p>
+            <form action="{{ route('checkout.show', $product->slug) }}" method="get">
+                <select class="quantity" name="quantity" id="quantity" data-id="{{ $product->rowId }}" data-productQuantity="{{ $product->quantity }}">
+                    @for ($i = 1; $i < $product->quantity + 1 ; $i++)
+                        <option {{ 1 == $i ? 'selected' : '' }}>{{ $i }}</option>
+                    @endfor
+                </select>
+                <p>&nbsp;</p>
+                @if ($product->quantity > 0)
+                    {{-- <a href="{{ route('checkout.show', $product->slug) }}">Purchase</a> --}}
+                    <button type="submit" class="btn btn-primary">Purchase</button>
+                @endif
+            </form>
 
-            <p>&nbsp;</p>
-            @if ($product->quantity > 0)
-                <a href="{{ route('checkout.show', $product->slug) }}">Purchase</a>
-            @endif
         </div>
     </div> <!-- end product-section -->
     <div class="product-cause-section">
@@ -64,24 +72,26 @@
 @endsection
 
 @section('extra-js')
+    <script src="{{ asset('js/app.js') }}"></script>
     <script>
         (function(){
-            const currentImage = document.querySelector('#currentImage');
-            const images = document.querySelectorAll('.product-section-thumbnail');
 
-            images.forEach((element) => element.addEventListener('click', thumbnailClick));
+            // const currentImage = document.querySelector('#currentImage');
+            // const images = document.querySelectorAll('.product-section-thumbnail');
 
-            function thumbnailClick(e) {
-                currentImage.classList.remove('active');
+            // images.forEach((element) => element.addEventListener('click', thumbnailClick));
 
-                currentImage.addEventListener('transitionend', () => {
-                    currentImage.src = this.querySelector('img').src;
-                    currentImage.classList.add('active');
-                })
+            // function thumbnailClick(e) {
+            //     currentImage.classList.remove('active');
 
-                images.forEach((element) => element.classList.remove('selected'));
-                this.classList.add('selected');
-            }
+            //     currentImage.addEventListener('transitionend', () => {
+            //         currentImage.src = this.querySelector('img').src;
+            //         currentImage.classList.add('active');
+            //     })
+
+            //     images.forEach((element) => element.classList.remove('selected'));
+            //     this.classList.add('selected');
+            // }
 
         })();
     </script>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Voyager;
 use App\Product;
 use App\Category;
 use App\CategoryProduct;
+use App\Exports\DataExport;
 use Illuminate\Http\Request;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\DB;
@@ -302,6 +303,10 @@ class ProductsController extends VoyagerBaseController
         }
     }
 
+    public function exportFile()
+    {
+        return Excel::download(new DataExport, 'data.csv', \Maatwebsite\Excel\Excel::CSV);
+    }
     protected function updateProductCategories(Request $request, $id)
     {
         if ($request->category) {

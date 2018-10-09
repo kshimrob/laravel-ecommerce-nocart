@@ -17,6 +17,7 @@ Route::get('/blog/{slug}', 'PostCategoryController@show')->name('postcategory.sh
 Route::get('/causecheckout', 'CauseCheckoutController@index')->name('causecheckout.index');
 Route::get('/causecheckout/{slug}', 'CauseCheckoutController@show')->name('causecheckout.show');
 
+Route::get('/export', 'Voyager\ProductsController@exportFile');
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });

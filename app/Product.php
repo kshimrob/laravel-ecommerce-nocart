@@ -42,16 +42,21 @@ class Product extends Model
         return money_format('$%i', $this->price / 100);
     }
 
-    public function taxCost()
+    public function priceWithQuantity($quantity)
+    {
+        return money_format('$%i', $this->price * intval($quantity) / 100);
+    }
+    
+    public function taxCost($quantity)
     {
         $tax = $this->fee;
-        return money_format('$%i', $this->price * $tax / 10000);
+        return money_format('$%i', $this->price * intval($quantity) * $tax / 10000);
     }
 
-    public function priceWithTax()
+    public function priceWithTax($quantity)
     {
         $tax = $this->fee;
-        $finalTotal = ($this->price / 100) + ($this->price * $tax / 10000);
+        $finalTotal = ($this->price * intval($quantity) / 100) + ($this->price * intval($quantity) * $tax / 10000);
         return money_format('$%i', $finalTotal);
     }
 
