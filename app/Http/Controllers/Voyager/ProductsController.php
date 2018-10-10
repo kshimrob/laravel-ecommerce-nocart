@@ -303,10 +303,6 @@ class ProductsController extends VoyagerBaseController
         }
     }
 
-    public function exportFile()
-    {
-        return Excel::download(new DataExport, 'data.csv', \Maatwebsite\Excel\Excel::CSV);
-    }
     protected function updateProductCategories(Request $request, $id)
     {
         if ($request->category) {

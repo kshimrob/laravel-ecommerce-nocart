@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Category;
 use App\Cause;
+use Excel;
+use App\Exports\DataExport;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -14,6 +16,11 @@ class ShopController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function exportFile()
+    {
+        return Excel::download(new DataExport, 'data.csv', \Maatwebsite\Excel\Excel::CSV);
+    }
     public function index()
     {
         $pagination = 9;
