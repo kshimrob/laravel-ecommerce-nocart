@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Post;
+use App\PromoEvent;
 use Illuminate\Http\Request;
 
 class LandingPageController extends Controller
@@ -17,9 +18,14 @@ class LandingPageController extends Controller
     {
         $products = Product::where('featured', true)->take(8)->inRandomOrder()->get();
         $posts = Post::where('status', 'PUBLISHED')->take(3)->inRandomOrder()->get();
+        $long_promos = PromoEvent::where('promo_type', 'long')->where('published', true)->take(2)->get();
+        $short_promos = PromoEvent::where('promo_type', 'short')->where('published', true)->take(2)->get();
+
         return view('landing-page')->with([
             'products' => $products,
             'posts' => $posts,
+            'long_promos' => $long_promos,
+            'short_promos' => $short_promos,
         ]);
     }
 }

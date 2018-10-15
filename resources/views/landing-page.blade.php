@@ -38,6 +38,34 @@
         </div>
     </div> <!-- end tickets -->
 
+    <div class="long-promos">
+        @foreach ($long_promos as $promo)
+        <div class="single-long-promo clearfix">
+            <div class="text">
+                <h2>{{ $promo->title }}</h2>
+                <p class="subheader">{{ $promo->second_headline }}</p>
+                <p>{{ $promo->description }}</p>
+                <a href="{{ $promo->url }}" class="red-btn">See Tickets</a>
+            </div>
+            <div class="promo-img" style="background-image: url({{ Voyager::image($promo->image) }});"></div>
+        </div>
+        @endforeach
+    </div> <!-- end long promos -->
+
+    <div class="short-promos">
+        @foreach ($short_promos as $promo)
+        <div class="single-short-promo clearfix">
+            <div class="text">
+                <h2>{{ $promo->title }}</h2>
+                <p class="subheader">{{ $promo->second_headline }}</p>
+                <p>{{ $promo->description }}</p>
+                <a href="{{ $promo->url }}" class="red-btn">See Tickets</a>
+            </div>
+            <div class="promo-img" style="background-image: url({{ Voyager::image($promo->image) }});"></div>
+        </div>
+        @endforeach
+    </div> <!-- end short promos -->
+
     <div class="blog-posts-preview">
         <h2>Inspiring Stories</h2>
         <div class="col-md-3">
@@ -53,5 +81,5 @@
         <div class="more-posts">
                 <a href="{{ route('blog.index') }}" class="yellow-btn">See More</a>
         </div>
-    </div>
+    </div> <!-- end blog posts preview -->
 @endsection

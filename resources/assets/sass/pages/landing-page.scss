@@ -122,6 +122,19 @@
     }
 }
 
+.long-promos {
+    .single-long-promo {
+        .promo-img {
+            height: 420px;
+            width: 70%;
+            float: right;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+    }
+}
+
 .blog-posts-preview {
     max-width: 1200px;
     margin: 0 auto;
