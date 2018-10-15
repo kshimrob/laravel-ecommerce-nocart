@@ -1,25 +1,31 @@
 @extends('layout')
 @section('content')
+<div class="header-container">
     <div class="landing-header">
-        <h1>Join the Crowd. Be the Change.</h1>
-        <p>Intro copy. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse diam nulla, pelletesque.</p>
-        <p><a href="/" class="yellow-btn">Learn More</a></p>
-        <div class="home-search">
-            <form>
-                <p>Search by Event, Performer, Venue, or Team</p>
-                <input type="text" name="search">
-                <button type="submit">Search</button>
-            </form>
-            <p>Find events near you:</p>
-            <ul>
-                <li><a href="/">Music</a></li>
-                <li><a href="/">Comedy</a></li>
-                <li><a href="/">Theater</a></li>
-                <li><a href="/">Sports</a></li>
-            </ul>
+        <video autoplay loop id="bgvid">
+            <source src="https://s3.us-east-2.amazonaws.com/elasticbeanstalk-us-east-2-698644334116/home-vid.mp4" type="video/mp4" />
+        </video>
+        <div class="text">
+            <h1>Join the Crowd. Be the Change.</h1>
+            <p>Intro copy. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse diam nulla, pelletesque.</p>
+            <p><a href="/" class="yellow-btn">Learn More</a></p>
+            <div class="home-search">
+                <form>
+                    <p>Search by Event, Performer, Venue, or Team</p>
+                    <input type="text" name="search">
+                    <button type="submit">Search</button>
+                </form>
+                <p>Find events near you:</p>
+                <ul>
+                    <li><a href="/">Music</a></li>
+                    <li><a href="/">Comedy</a></li>
+                    <li><a href="/">Theater</a></li>
+                    <li><a href="/">Sports</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-
+</div>
     <div class="featured-tickets">
         <h2>Popular Near You</h2>
         <div class="col-md-3">

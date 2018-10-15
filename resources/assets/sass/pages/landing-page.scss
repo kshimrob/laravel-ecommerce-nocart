@@ -1,8 +1,30 @@
+.header-container {
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
 .landing-header {
     width: 100%;
-    height: 100vh;
-    background: black;
-    padding: 200px 100px 0;
+    min-height: 100vh;
+    padding: 200px 0;
+
+    video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -100;
+        -ms-transform: translateX(-50%) translateY(-50%);
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+    .text {
+        padding-left: 100px;
+    }
 
     h1 {
         text-transform: uppercase;
@@ -123,7 +145,36 @@
 }
 
 .long-promos {
+
     .single-long-promo {
+        margin-bottom: 50px;
+        position: relative;
+
+        .text {
+            background-color: black;
+            display: inline-block;
+            padding: 50px;
+            color: white;
+            height: 350px;
+            position: absolute;
+            top: 30px;
+            left: 10%;
+        }
+
+        h2 {
+            font: bold 40px 'Roboto Condensed', sans-serif;
+            text-transform: uppercase;
+            max-width: 450px;
+        }
+
+        .subheader {
+            font: bold 18px 'Roboto', sans-serif;
+        }
+
+        p {
+            max-width: 450px;
+        }
+
         .promo-img {
             height: 420px;
             width: 70%;
@@ -131,6 +182,58 @@
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
+        }
+    }
+
+    .single-long-promo:nth-of-type(2) {
+        .promo-img {
+            float: left; 
+        }
+
+        .text {
+            left: 50%;
+        }
+    }
+}
+
+.short-promos {
+    padding: 70px 20px;
+    display: flex;
+    display: -webkit-flex;
+
+    .single-short-promo {
+        width: 49%;
+        margin-right: 1%;
+        display: flex;
+        display: -webkit-flex;
+        position: relative;
+        justify-content: center;
+        -webkit-justify-content: center;
+
+        .promo-img {
+            height: 460px;
+            width: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+        .text {
+            position: absolute;
+            color: white;
+            padding: 25px 50px;
+            background: black;
+            max-width: 80%;
+            top: 210px;
+            height: 320px;
+
+            h2 {
+                font: bold 40px 'Roboto Condensed', sans-serif;
+                text-transform: uppercase;  
+            }
+
+            .subheader {
+                font: bold 18px 'Roboto', sans-serif;
+            }
         }
     }
 }
@@ -191,3 +294,166 @@
     }
 }
 
+@media only screen and (max-width: 1300px) {
+    .short-promos .single-short-promo .text {
+        height: 360px;
+    }
+}
+@media only screen and (max-width: 1100px) {
+    .long-promos .single-long-promo:nth-of-type(2) .text {
+        left: 35%;
+    }
+
+    .short-promos .single-short-promo .text h2 {
+        font-size: 32px;
+    }
+
+    .short-promos .single-short-promo .text .subheader,
+    .short-promos .single-short-promo .text h2,
+    .long-promos .single-long-promo .text .subheader,
+    .long-promos .single-long-promo .text h2 {
+        margin-bottom: 5px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .featured-tickets .col-md-3 .product {
+        width: 49%;
+    }
+
+    .featured-tickets .col-md-3 .product:nth-of-type(odd) {
+        margin-right: 1%;
+    }
+
+    .featured-tickets .col-md-3 .product:nth-of-type(even) {
+        margin-left: 1%;
+        margin-right: 0;
+    }
+
+    .blog-posts-preview .col-md-3 .post-img {
+        height: 250px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .long-promos .single-long-promo .promo-img {
+        width: 100%;
+    }
+
+    .long-promos .single-long-promo .text {
+        top: 150px;
+        left: 5%;
+    }
+
+    .long-promos .single-long-promo:nth-of-type(2) .text {
+        left: auto;
+        right: 5%;
+    }
+
+    .long-promos .single-long-promo {
+        margin-bottom: 120px;
+    }
+
+    .short-promos {
+        display: block;
+        padding: 0;
+    }
+
+    .short-promos .single-short-promo {
+        width: 100%;
+        flex-direction: column-reverse;
+        -webkit-flex-direction: column-reverse;
+    }
+
+    .short-promos .single-short-promo .text {
+        max-width: 100%;
+        margin-bottom: 50px;
+        padding: 20px;
+        height: auto;
+        position: relative;
+        top: 0;
+    }
+
+    .short-promos .single-short-promo .promo-img {
+        height: 200px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .blog-posts-preview .col-md-3 .post-img,
+    .landing-header video {
+        display: none;
+    }
+
+    .landing-header h1 {
+        font-size: 42px;
+        margin-bottom: 0;
+    }
+    
+    .landing-header .text {
+        padding: 0 50px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .featured-tickets .col-md-3 .product:nth-of-type(odd),
+    .featured-tickets .col-md-3 .product:nth-of-type(even) {
+        width: 100%;
+        margin: 0;
+    }
+
+    .long-promos .single-long-promo .text h2,
+    .long-promos .single-long-promo .text .subheader,
+    .long-promos .single-long-promo p {
+        max-width: 100%;
+    }
+
+    .featured-tickets .ticket-img {
+        display: none;
+    }
+
+    .long-promos .single-long-promo {
+        margin-bottom: 50px;
+        display: flex;
+        display: -webkit-flex;
+        -webkit-flex-direction: column-reverse;
+        flex-direction: column-reverse;
+    }
+
+    .long-promos .single-long-promo .text,
+    .long-promos .single-long-promo:nth-of-type(2) .text {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        width: 100%;
+        padding: 20px;
+        height: auto;
+    }
+
+    .long-promos .single-long-promo h2 {
+        font-size: 32px;
+    }
+
+    .long-promos .single-long-promo .promo-img {
+        height: 200px;
+    }
+
+    .blog-posts-preview .col-md-3 .post {
+        width: 100%;
+        margin: 0 0 20px 0;
+    }
+
+    .blog-posts-preview {
+        padding: 20px;
+    }
+
+    .landing-header {
+        padding: 150px 0 50px;
+        min-height: 0;
+    }
+
+    .landing-header .home-search form input {
+        width: calc(100% - 80px);
+    }
+}

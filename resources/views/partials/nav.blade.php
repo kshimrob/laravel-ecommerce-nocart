@@ -100,7 +100,7 @@
                     <a href="">Why Tix4Cause?</a>
                 </li>
                 <li>
-                    <a href="">Concerts</a>
+                    <a class="subnav-toggle">Concerts</a>
                     <ul class="sub-menu">
                         <li><a href="">Country</a></li>
                         <li><a href="">Pop</a></li>
@@ -123,7 +123,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="">Sports</a>
+                    <a class="subnav-toggle">Sports</a>
                     <ul class="sub-menu">
                         <li><a href="">NFL</a></li>
                         <li><a href="">NBA</a></li>
@@ -146,7 +146,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="">Arts & Theater</a>
+                    <a class="subnav-toggle">Arts & Theater</a>
                     <ul class="sub-menu">
                         <li><a href="">Broadway</a></li>
                         <li><a href="">Children/Family</a></li>
@@ -157,7 +157,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="">Other Tickets</a>
+                    <a class="subnav-toggle">Other Tickets</a>
                     <ul class="sub-menu">
                             <li><a href="">Las Vegas Shows</a></li>
                             <li><a href="">Fairs/Festivals</a></li>
@@ -171,8 +171,13 @@
     </div> <!-- end top-nav -->
 </header>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
-    document.getElementById('nav-toggle-label').addEventListener("click", openMenu);
+    $('#nav-toggle-label').click(toggleMenu);
+
+    function toggleMenu() {
+         
+    }
 
     function openMenu() {
         var mobileMenu = document.getElementById("mobile");
@@ -181,5 +186,9 @@
         } else {
             mobileMenu.style.display = "none";
         }
+    }
+
+    function openSubMenu() {
+        console.log("yo");
     }
 </script>

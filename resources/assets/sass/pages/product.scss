@@ -72,3 +72,70 @@
     margin-bottom: 16px;
 }
 
+.cause-banner {
+    background-color: #12A8DE;
+    text-align: center;
+    padding: 20px 50px;
+
+    h2 {
+        margin-bottom: 0;
+        text-transform: uppercase;
+        font: bold 54px 'Roboto Condensed', sans-serif;
+
+        span {
+            display: inline-block;
+            position: relative;
+        }
+
+        span::after {
+            height: 20px;
+            position: absolute;
+            background-color: #FFDA00;
+            width: 100%;
+        }
+    }
+}
+
+.single-cause {
+    padding: 100px 20px;
+    a {
+      transition: 0.2s;
+    }
+    .md-col-6 {
+      width: 49%;
+      float: left;
+    }
+    .md-col-6:first-of-type {
+      margin-right: 2%;
+    }
+    h2 {
+      color: #2FA9DD;
+    }
+    .main-img {
+      width: 100%;
+    }
+    .logo {
+      margin-bottom: 10px;
+      height: 100px;
+    }
+    .social {
+      margin-right: 20px;
+    }
+    .social:hover {
+      opacity: .6;
+    }
+    .extra-info {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    a.tag:hover {
+      text-decoration: underline;
+    }
+    @media only screen and (max-width: 767px) {
+      .sm-col-12 {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+    }
+  }
