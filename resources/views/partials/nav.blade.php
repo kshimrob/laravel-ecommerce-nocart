@@ -95,13 +95,13 @@
                     <span></span>
                 </div>
             </label>
-            <ul class="mobile-nav">
+            <ul class="mobile-nav" id="mobile" style="display:none;">
                 <li>
                     <a href="">Why Tix4Cause?</a>
                 </li>
                 <li>
                     <a href="">Concerts</a>
-                    <ul class="sub-menu wide concerts">
+                    <ul class="sub-menu">
                         <li><a href="">Country</a></li>
                         <li><a href="">Pop</a></li>
                         <li><a href="">Rock</a></li>
@@ -124,7 +124,7 @@
                 </li>
                 <li>
                     <a href="">Sports</a>
-                    <ul class="sub-menu wide sports">
+                    <ul class="sub-menu">
                         <li><a href="">NFL</a></li>
                         <li><a href="">NBA</a></li>
                         <li><a href="">MLB</a></li>
@@ -170,3 +170,16 @@
       </div>
     </div> <!-- end top-nav -->
 </header>
+
+<script>
+    document.getElementById('nav-toggle-label').addEventListener("click", openMenu);
+
+    function openMenu() {
+        var mobileMenu = document.getElementById("mobile");
+        if (mobileMenu.style.display === "none") {
+            mobileMenu.style.display = "inline-block";
+        } else {
+            mobileMenu.style.display = "none";
+        }
+    }
+</script>

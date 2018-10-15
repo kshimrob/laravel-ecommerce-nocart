@@ -1,105 +1,57 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layout')
+@section('content')
+    <div class="landing-header">
+        <h1>Join the Crowd. Be the Change.</h1>
+        <p>Intro copy. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse diam nulla, pelletesque.</p>
+        <p><a href="/" class="yellow-btn">Learn More</a></p>
+        <div class="home-search">
+            <form>
+                <p>Search by Event, Performer, Venue, or Team</p>
+                <input type="text" name="search">
+                <button type="submit">Search</button>
+            </form>
+            <p>Find events near you:</p>
+            <ul>
+                <li><a href="/">Music</a></li>
+                <li><a href="/">Comedy</a></li>
+                <li><a href="/">Theater</a></li>
+                <li><a href="/">Sports</a></li>
+            </ul>
+        </div>
+    </div>
 
-        <title>Laravel Ecommerce Example</title>
+    <div class="featured-tickets">
+        <h2>Popular Near You</h2>
+        <div class="col-md-3">
+            @foreach ($products as $product)
+                <div class="product">
+                    <div class="ticket-img" style="background-image: url({{ productImage($product->image) }})"></div>
+                    <p class="product-name">{{ $product->name }}</p>
+                    <p>{{ $product->date }}</p>
+                    <p>{{ $product->venue }}</p>
+                    <a href="{{ route('shop.show', $product->slug) }}" class="red-btn">Read More</a>
+                </div>
+            @endforeach
+        </div>
+        <div class="more-tickets">
+            <a href="{{ route('shop.index') }}" class="yellow-btn">See More</a>
+        </div>
+    </div> <!-- end tickets -->
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat%7CRoboto:300,400,700" rel="stylesheet">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
-
-    </head>
-    <body>
-        <div id="app">
-            <header class="with-background">
-                <div class="top-nav container">
-                    <div class="top-nav-left">
-                        <div class="logo">Ecommerce</div>
-                        
-                    </div>
-                    <div class="top-nav-right">
-                        
-                    </div>
-                </div> <!-- end top-nav -->
-                <div class="hero container">
-                    <div class="hero-copy">
-                        <h1>Laravel Ecommerce Demo</h1>
-                        <p>Includes multiple products, categories, a shopping cart and a checkout system with Stripe integration.</p>
-                        <div class="hero-buttons">
-                            <a href="https://www.youtube.com/playlist?list=PLEhEHUEU3x5oPTli631ZX9cxl6cU_sDaR" class="button button-white">Screencasts</a>
-                            <a href="https://github.com/drehimself/laravel-ecommerce-example" class="button button-white">GitHub</a>
-                        </div>
-                    </div> <!-- end hero-copy -->
-
-                    <div class="hero-image">
-                        <img src="img/macbook-pro-laravel.png" alt="hero image">
-                    </div> <!-- end hero-image -->
-                </div> <!-- end hero -->
-            </header>
-
-            <div class="featured-section">
-
-                <div class="container">
-                    <h1 class="text-center">Laravel Ecommerce</h1>
-
-                    <p class="section-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore vitae nisi, consequuntur illum dolores cumque pariatur quis provident deleniti nesciunt officia est reprehenderit sunt aliquid possimus temporibus enim eum hic lorem.</p>
-
-                    <div class="text-center button-container">
-                        <a href="#" class="button">Featured</a>
-                        <a href="#" class="button">On Sale</a>
-                    </div>
-
-                    {{-- <div class="tabs">
-                        <div class="tab">
-                            Featured
-                        </div>
-                        <div class="tab">
-                            On Sale
-                        </div>
-                    </div> --}}
-
-                    <div class="products text-center">
-                        @foreach ($products as $product)
-                            <div class="product">
-                                <a href="{{ route('shop.show', $product->slug) }}"><img src="{{ productImage($product->image) }}" alt="product"></a>
-                                <a href="{{ route('shop.show', $product->slug) }}"><div class="product-name">{{ $product->name }}</div></a>
-                                <div class="product-price">{{ $product->presentPrice() }}</div>
-                            </div>
-                        @endforeach
-
-                    </div> <!-- end products -->
-
-                    <div class="text-center button-container">
-                        <a href="{{ route('shop.index') }}" class="button">View more products</a>
-                    </div>
-
-                </div> <!-- end container -->
-
-            </div> <!-- end featured-section -->
-
-            <div class="blog-posts-preview">
-                <h1>Inspiring Stories</h1>
-                @foreach ($posts as $post)
-                    <div class="col-md-3">
-                        <a href="{{ route('post.show', $post->slug) }}">
-                            <img src="{{ Voyager::image( $post->image ) }}">
-                            <h3>{{ $post->title }}</h3>
-                            <p>{{ $post->excerpt }}</p>
-                        </a>
-                    </div>
-                @endforeach
+    <div class="blog-posts-preview">
+        <h2>Inspiring Stories</h2>
+        <div class="col-md-3">
+        @foreach ($posts as $post)
+            <div class="post">
+                <div class="post-img" style="background-image: url({{ Voyager::image( $post->image ) }})"></div>
+                <h3>{{ $post->title }}</h3> 
+                <p>{{ $post->excerpt }}</p>
+                <a href="{{ route('post.show', $post->slug) }}">Read More</a>
             </div>
-
-            @include('partials.footer')
-
-        </div> <!-- end #app -->
-        <script src="js/app.js"></script>
-    </body>
-</html>
+        @endforeach
+        </div>
+        <div class="more-posts">
+                <a href="{{ route('blog.index') }}" class="yellow-btn">See More</a>
+        </div>
+    </div>
+@endsection

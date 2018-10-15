@@ -21,5 +21,3 @@ Vue.component('blog-posts', require('./components/BlogPosts'));
 const app = new Vue({
     el: '#app'
 });
-
-$('.mobile-nav').show();

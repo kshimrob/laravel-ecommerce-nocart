@@ -9,13 +9,9 @@ html {
 a {
     text-decoration: none;
     color: $text-color;
-
-    &:visited {
-        color: $text-color;
-    }
-
+    transition: 0.2s;
     &:hover {
-        color: lighten($text-color, 40%);
+        opacity: 0.5;
     }
 
 }

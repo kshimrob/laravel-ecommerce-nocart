@@ -29,5 +29,18 @@ p {
   background-color: #FFDA00;
   font: bold 14px 'Roboto Condensed', sans-serif;
   letter-spacing: 0.2px;
+  display: inline-block;
   text-transform: uppercase;
+}
+
+.red-btn {
+  padding: 5px 10px;
+  border: 0;
+  line-height: 1;
+  background-color: #E81C40;
+  color: white;
+  text-transform: uppercase;
+  font: bold 14px 'Roboto Condensed', sans-serif;
+  letter-spacing: 0.3px;
+  display: inline-block;
 }
