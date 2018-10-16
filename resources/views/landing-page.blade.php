@@ -79,8 +79,7 @@
             <div class="post">
                 <div class="post-img" style="background-image: url({{ Voyager::image( $post->image ) }})"></div>
                 <h3>{{ $post->title }}</h3> 
-                <p>{{ $post->excerpt }}</p>
-                <a href="{{ route('post.show', $post->slug) }}">Read More</a>
+                <p>{{ $post->excerpt }}<a href="{{ route('post.show', $post->slug) }}">Read More</a></p>
             </div>
         @endforeach
         </div>

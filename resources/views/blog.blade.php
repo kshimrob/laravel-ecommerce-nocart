@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Blog</title>
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-</head>
-<body>
-
+@extends('layout')
+@section('content')
 	<div class="container">
     <h1>Blog</h1>
     <div class="post-categories">
@@ -29,6 +23,4 @@
       @endforeach
 		</div>
 	</div>
-
-</body>
-</html>
+@endsection
