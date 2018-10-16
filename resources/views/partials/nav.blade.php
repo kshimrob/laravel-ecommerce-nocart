@@ -26,14 +26,14 @@
                         <li>
                             <a href="">Other</a>
                             <ul class="sub-submenu">
-                                <li><a href="">NCAAB</a></li>
-                                <li><a href="">Soccer</a></li>
-                                <li><a href="">WWE</a></li>
-                                <li><a href="">PGA</a></li>
-                                <li><a href="">NASCAR</a></li>
-                                <li><a href="">MMA</a></li>
-                                <li><a href="">Boxing</a></li>
-                                <li><a href="">Tennis</a></li>
+                                <li><a href="">R&B</a></li>
+                                <li><a href="">Children & Family</a></li>
+                                <li><a href="">Alternative</a></li>
+                                <li><a href="">Festival/Tour</a></li>
+                                <li><a href="">Jazz/Blues</a></li>
+                                <li><a href="">Latin</a></li>
+                                <li><a href="">Classical</a></li>
+                                <li><a href="">Holiday</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -100,54 +100,44 @@
                     <a href="">Why Tix4Cause?</a>
                 </li>
                 <li>
-                    <a class="subnav-toggle">Concerts</a>
-                    <ul class="sub-menu">
+                    <a class="subnav-toggle" data-category="concerts">Concerts<svg id="svg-concerts" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path style="fill:#12A8DE" d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg></a>
+                    <ul class="sub-menu" id="submenu-concerts">
                         <li><a href="">Country</a></li>
                         <li><a href="">Pop</a></li>
                         <li><a href="">Rock</a></li>
                         <li><a href="">Rap/Hip Hop</a></li>
                         <li><a href="">Comedy</a></li>
-                        <li>
-                            <a href="">Other</a>
-                            <ul class="sub-submenu">
-                                <li><a href="">NCAAB</a></li>
-                                <li><a href="">Soccer</a></li>
-                                <li><a href="">WWE</a></li>
-                                <li><a href="">PGA</a></li>
-                                <li><a href="">NASCAR</a></li>
-                                <li><a href="">MMA</a></li>
-                                <li><a href="">Boxing</a></li>
-                                <li><a href="">Tennis</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="">R&B</a></li>
+                        <li><a href="">Children & Family</a></li>
+                        <li><a href="">Alternative</a></li>
+                        <li><a href="">Festival/Tour</a></li>
+                        <li><a href="">Jazz/Blues</a></li>
+                        <li><a href="">Latin</a></li>
+                        <li><a href="">Classical</a></li>
+                        <li><a href="">Holiday</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a class="subnav-toggle">Sports</a>
-                    <ul class="sub-menu">
+                    <a class="subnav-toggle" data-category="sports">Sports<svg id="svg-sports" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path style="fill:#12A8DE" d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg></a>
+                    <ul class="sub-menu" id="submenu-sports">
                         <li><a href="">NFL</a></li>
                         <li><a href="">NBA</a></li>
                         <li><a href="">MLB</a></li>
                         <li><a href="">NHL</a></li>
                         <li><a href="">NCAAF</a></li>
-                        <li>
-                            <a href="">Other</a>
-                            <ul class="sub-submenu">
-                                <li><a href="">NCAAB</a></li>
-                                <li><a href="">Soccer</a></li>
-                                <li><a href="">WWE</a></li>
-                                <li><a href="">PGA</a></li>
-                                <li><a href="">NASCAR</a></li>
-                                <li><a href="">MMA</a></li>
-                                <li><a href="">Boxing</a></li>
-                                <li><a href="">Tennis</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="">NCAAB</a></li>
+                        <li><a href="">Soccer</a></li>
+                        <li><a href="">WWE</a></li>
+                        <li><a href="">PGA</a></li>
+                        <li><a href="">NASCAR</a></li>
+                        <li><a href="">MMA</a></li>
+                        <li><a href="">Boxing</a></li>
+                        <li><a href="">Tennis</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a class="subnav-toggle">Arts & Theater</a>
-                    <ul class="sub-menu">
+                    <a class="subnav-toggle" data-category="arts">Arts & Theater<svg id="svg-arts" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path style="fill:#12A8DE" d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg></a>
+                    <ul class="sub-menu" id="submenu-arts">
                         <li><a href="">Broadway</a></li>
                         <li><a href="">Children/Family</a></li>
                         <li><a href="">Musical/Play</a></li>
@@ -157,8 +147,8 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="subnav-toggle">Other Tickets</a>
-                    <ul class="sub-menu">
+                    <a class="subnav-toggle" data-category="other">Other Tickets<svg id="svg-other" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path style="fill:#12A8DE" d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg></a>
+                    <ul class="sub-menu" id="submenu-other">
                             <li><a href="">Las Vegas Shows</a></li>
                             <li><a href="">Fairs/Festivals</a></li>
                             <li><a href="">Circus</a></li>
@@ -174,21 +164,33 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
     $('#nav-toggle-label').click(toggleMenu);
+    $('.subnav-toggle').click(function(){
+       var category = $(this).attr('data-category');
+       if ($(`#submenu-${category}`).css('display') === 'none') {
+           $('#mobile .sub-menu').hide();
+           $('.subnav-toggle svg').css('transform', 'rotate(0)');
+           $(`#submenu-${category}`).show();
+           $(`#svg-${category}`).css('transform', 'rotate(180deg)');
+       } else {
+            $(`#submenu-${category}`).hide();
+            $(`#svg-${category}`).css('transform', 'rotate(0)');
+       }
+    });
+
+    $(window).resize(function() {
+        if ($('#mobile')[0].style.display === 'inline-block') {
+            $('#nav-toggle-label').click();
+        }
+    });
 
     function toggleMenu() {
-         
-    }
-
-    function openMenu() {
-        var mobileMenu = document.getElementById("mobile");
+        var mobileMenu = $('#mobile')[0];
         if (mobileMenu.style.display === "none") {
             mobileMenu.style.display = "inline-block";
         } else {
             mobileMenu.style.display = "none";
+            $('#mobile .sub-menu').hide();
+            $('.subnav-toggle svg').css('transform', 'rotate(0)');
         }
-    }
-
-    function openSubMenu() {
-        console.log("yo");
     }
 </script>

@@ -114,11 +114,11 @@ header {
         }
 
         .wide {
-          width: 250px;
+          width: 270px;
         }
 
         .concerts {
-          height: 245px;
+          height: 275px;
         }
 
         .sports {
@@ -170,10 +170,25 @@ header {
     position: absolute;
     padding: 20px;
     width: 190px;
-    height: 450px;
+    right: 0;
 
     li {
       padding: 10px 0;
+      position: relative;
+
+      svg {
+        position: absolute;
+        top: 17px;
+        right: 5px;
+      }
+
+      a:hover {
+        cursor: pointer;
+      }
+
+      .sub-menu li {
+        padding: 0 0 0 10px;
+      }
     }
   }
   header .top-nav .top-nav-left form {
@@ -373,5 +388,18 @@ header {
   }
 }
 
+@media only screen and (max-width: 670px) {
+  header .top-nav .top-nav-left form {
+    display: block;
+    margin-left: 0;
+  }
+
+  header .top-nav .top-nav-right .nav-location {
+    right: 0;
+    bottom: -75px;
+    position: relative;
+    margin: 0;
+  }
+}
     
   
