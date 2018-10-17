@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PostCategory;
-use App\Post;
+use App\BlogPost;
 
 class PostCategoryController extends Controller
 {
