@@ -1,6 +1,6 @@
 @extends('layout')
 @section('content')
-<div class="header-container">
+<div class="header-container blog-post">
 	<div class="blog-header" style="background-image:url({{ Voyager::image( $post->image ) }})"></div>
 	<div class="single-post-categories">
 			<ul>

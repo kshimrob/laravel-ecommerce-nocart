@@ -1,8 +1,8 @@
 @extends('layout')
 @section('content')
-	<div class="container">
-    <h1>Blog</h1>
-    <div class="post-categories">
+	<div class="blog container">
+    <div class="sidebar">
+      <h1>Blog</h1>
       <h2>Categories</h2>
       <ul>
         <li><a href="/blog">All Categories</a></li>
@@ -10,17 +10,54 @@
         <li><a href="{{ route('postcategory.show', $category->slug) }}">{{ $category->name }}</a></li>
         @endforeach
       </ul>
-    </div>
-		<div class="row">
-      @foreach ($posts as $post)
-        <div class="col-md-4">
-            <a href="{{ route('post.show', $post->slug) }}">
-                <img style="width: 100%;" src="{{ Voyager::image( $post->image ) }}">
-                <h3>{{ $post->title }}</h3>
-                <p>{{ $post->excerpt }}</p>
-            </a>
+  </div>
+  
+  <div class="container">
+        <div class="col-md-12" id="post-data">
+          @include('data')
         </div>
-      @endforeach
-		</div>
-	</div>
+  </div>
+      
+  <div class="ajax-load text-center" style="display:none">
+    <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
+  </div>
+</div>
+@endsection
+
+@section('extra-js')
+<script type="text/javascript">
+	var page = 1;
+	$(window).scroll(function() {
+	    if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+	        page++;
+	        loadMoreData(page);
+	    }
+	});
+
+
+	function loadMoreData(page){
+	  $.ajax(
+	        {
+	            url: '?page=' + page,
+	            type: "get",
+	            beforeSend: function()
+	            {
+	                $('.ajax-load').show();
+	            }
+	        })
+	        .done(function(data)
+	        {
+	            if(data.html == " "){
+	                $('.ajax-load').html("No more records found");
+	                return;
+	            }
+	            $('.ajax-load').hide();
+	            $("#post-data").append(data.html);
+	        })
+	        .fail(function(jqXHR, ajaxOptions, thrownError)
+	        {
+	              alert('server not responding...');
+	        });
+	}
+</script>
 @endsection
