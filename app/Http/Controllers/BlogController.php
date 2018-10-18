@@ -11,6 +11,7 @@ class BlogController extends Controller
     public function index(Request $request)
     {
         $posts = BlogPost::where('status', 'PUBLISHED')->orderby('published_on', 'DESC')->paginate(8);
+        $total_pages = $posts->lastPage();
         $categories = PostCategory::all();
 
         if ($request->ajax()) {
@@ -21,6 +22,7 @@ class BlogController extends Controller
         return view('/blog')->with([
             'posts' => $posts,
             'categories' => $categories,
+            'total_pages' => $total_pages
         ]);
     }
 }

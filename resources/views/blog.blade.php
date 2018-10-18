@@ -18,22 +18,33 @@
         </div>
   </div>
       
+ <div class="load-more-container">
+	 <button class="yellow-btn" id="load-more">Load More</button>
+</div> 
   <div class="ajax-load text-center" style="display:none">
     <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
   </div>
 </div>
+@component('components.searchevents')
+@endcomponent
+
 @endsection
+
 
 @section('extra-js')
 <script type="text/javascript">
 	var page = 1;
-	$(window).scroll(function() {
-	    if($(window).scrollTop() + $(window).height() >= $(document).height()) {
-	        page++;
-	        loadMoreData(page);
-	    }
+	var totalPages = {{ $total_pages }};
+	$('#load-more').click(function() {
+		if (page < (totalPages - 1)) {
+			page++;
+			loadMoreData(page);
+		} else {
+			page++;
+			loadMoreData(page);
+			$('#load-more').addClass('disabled').attr('disabled', 'disabled');
+		}
 	});
-
 
 	function loadMoreData(page){
 	  $.ajax(

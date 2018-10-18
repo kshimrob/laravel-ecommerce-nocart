@@ -1,5 +1,5 @@
 .blog {
-  padding: 60px 0;
+  padding: 60px 20px;
 
   .sidebar {
     position: absolute;
@@ -33,6 +33,23 @@
       font-weight: bold;
     }
   }
+
+  .load-more-container {
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  #load-more {
+    border: 0;
+  }
+
+  #load-more:hover {
+    cursor: pointer;
+  }
+
+  .disabled {
+    opacity: 0.2;
+  }
 }
 
 .posts-block {
@@ -55,7 +72,6 @@
     
     .text {
       padding: 16px;
-      height: 120px;
     }
 
     h3 {
@@ -81,5 +97,60 @@
     .image {
       height: 400px;
     }
+  }
+}
+
+.posts-block.extra > .card:first-of-type{
+  grid-column: 2 span;
+}
+
+@media only screen and (max-width: 1000px) {
+  .blog .sidebar {
+    position: static;
+    padding-top: 140px;
+  }
+
+  .blog .sidebar h1 {
+    margin-bottom: 0;
+  }
+
+  .blog .sidebar li {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .blog .sidebar ul {
+    margin-bottom: 0;
+    line-height: 1;
+  }
+
+  .posts-block {
+    padding-top: 30px;
+    grid-template-columns: 1fr 1fr;
+    grid-row-gap: 30px;
+  }
+
+  .posts-block .card:first-of-type {
+    grid-column: 1;
+  }
+
+  .posts-block .card:nth-of-type(4), .posts-block .card:nth-of-type(6) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .posts-block .card:nth-of-type(4) .image, .posts-block .card:nth-of-type(6) .image {
+    height: 170px;
+  }
+
+  .posts-block.extra > .card:first-of-type {
+    grid-column: 1 span;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .posts-block {
+    grid-template-columns: 1fr;
   }
 }
