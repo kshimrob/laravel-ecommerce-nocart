@@ -1,6 +1,8 @@
 footer {
     background-color: #F3F3F3;
-    padding: 50px 100px;
+    .footer-main {
+      padding: 50px 100px;
+    }
 
     a {
       transition: 0.2s;
@@ -99,6 +101,25 @@ footer {
         opacity: 0.5;
       }
     }
+
+    .sub-footer {
+      width: 100%;
+      text-align: center;
+      background-color: white;
+      float: left;
+      clear: both;
+      margin-top: 40px;
+
+      p {
+        margin-top: 20px;
+        font-size: 11px;
+
+        a {
+          margin-left: 20px;
+          display: inline-block;
+        }
+      }
+    }
 }
 
 @media only screen and (max-width: 1150px) {
@@ -110,7 +131,9 @@ footer {
 
 @media only screen and (max-width: 600px) {
   footer {
-    padding: 50px;
+    .footer-main {
+      padding: 50px;
+    }
     
     .footer-left ul li {
       width: 50%;

@@ -2,6 +2,8 @@
 
 Route::get('/', 'LandingPageController@index')->name('landing-page');
 Route::get('/about', 'StaticPageController@about');
+Route::get('/terms', 'StaticPageController@terms');
+Route::get('/privacy', 'StaticPageController@privacy');
 
 Route::get('/shop', 'ShopController@index')->name('shop.index');
 Route::get('/shop/{product}', 'ShopController@show')->name('shop.show');

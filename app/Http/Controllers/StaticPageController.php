@@ -20,4 +20,14 @@ class StaticPageController extends Controller
             'posts' => $posts,
         ]);
     }
+
+    public function terms()
+    {
+        return view('terms');
+    }
+
+    public function privacy()
+    {
+        return view('privacy');
+    }
 }
