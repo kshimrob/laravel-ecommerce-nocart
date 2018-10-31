@@ -1,4 +1,11 @@
 @extends('layout')
+
+@section('title')
+    Testing
+@endsection
+
+@section('description', 'Tix4Cause is a ticket exchange with access to millions of concert, sports & event tickets where a portion of every purchase is donated to charity.')
+
 @section('content')
 <div class="header-container">
     <div class="landing-header">
@@ -49,8 +56,7 @@
         <div class="single-long-promo clearfix">
             <div class="text">
                 <h2>{{ $promo->title }}</h2>
-                <p class="subheader">{{ $promo->second_headline }}</p>
-                <p>{{ $promo->description }}</p>
+                <p class="subheader">{{ $promo->description }}</p>
                 <a href="{{ $promo->url }}" class="red-btn">See Tickets</a>
             </div>
             <div class="promo-img" style="background-image: url({{ Voyager::image($promo->image) }});"></div>
@@ -63,8 +69,7 @@
         <div class="single-short-promo clearfix">
             <div class="text">
                 <h2>{{ $promo->title }}</h2>
-                <p class="subheader">{{ $promo->second_headline }}</p>
-                <p>{{ $promo->description }}</p>
+                <p class="subheader">{{ $promo->description }}</p>
                 <a href="{{ $promo->url }}" class="red-btn">See Tickets</a>
             </div>
             <div class="promo-img" style="background-image: url({{ Voyager::image($promo->image) }});"></div>
@@ -76,11 +81,13 @@
         <h2>Inspiring Stories</h2>
         <div class="col-md-3">
         @foreach ($posts as $post)
-            <div class="post">
-                <div class="post-img" style="background-image: url({{ Voyager::image( $post->image ) }})"></div>
-                <h3>{{ $post->title }}</h3> 
-                <p>{{ str_limit($post->excerpt, $limit = 150, $end= '...') }}<a href="{{ route('post.show', $post->slug) }}">Read More</a></p>
-            </div>
+            <a href="{{ route('post.show', $post->slug) }}" class="post">
+                <div>
+                    <div class="post-img" style="background-image: url({{ Voyager::image( $post->image ) }})"></div>
+                    <h3>{{ $post->title }}</h3> 
+                    <p>{{ str_limit($post->excerpt, $limit = 150, $end= '...') }}<span>Read More</span></p>
+                </div>
+            </a>
         @endforeach
         </div>
         <div class="more-posts">

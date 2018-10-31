@@ -15,13 +15,15 @@
         "cartalyst/stripe-laravel": "^8.0",
         "fideloper/proxy": "~4.0",
         "gloudemans/shoppingcart": "^2.5",
+        "khsing/world": "^0.6.0",
         "laravel/framework": "5.6.*",
         "laravel/scout": "^4.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
         "maatwebsite/excel": "^3.1",
         "nicolaslopezj/searchable": "^1.9",
-        "tcg/voyager": "1.1.*"
+        "tcg/voyager": "1.1.*",
+        "torann/geoip": "^1.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

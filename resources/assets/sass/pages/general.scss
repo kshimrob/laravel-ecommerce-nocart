@@ -34,7 +34,8 @@ p {
 }
 
 .red-btn,
-.black-btn {
+.black-btn,
+.checkout-section button[type=submit] {
   padding: 5px 10px;
   border: 0;
   line-height: 1;
@@ -44,9 +45,17 @@ p {
   font: bold 14px 'Roboto Condensed', sans-serif;
   letter-spacing: 0.3px;
   display: inline-block;
+  transition: 0.2s;
 }
 
 .black-btn {
   background-color: black;
   color: white;
+}
+
+.checkout-section button[type=submit]:hover,
+.red-btn:hover,
+.yellow-btn:hover,
+.black-btn:hover {
+  opacity: 0.5;
 }

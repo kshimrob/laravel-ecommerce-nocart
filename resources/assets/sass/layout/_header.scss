@@ -91,38 +91,39 @@ header {
 
         li {
           margin: 0 10px;
+          position: relative;
         }
 
         .sub-menu {
           display: none;
           position: absolute;
-          padding: 10px;
-          margin-top: 5px;
+          padding: 10px 0;
+          top: 33px;
+          left: 0;
+          height: auto;
           border: 1px solid lightgrey;
           background-color: white;
+          width: 100px;
+
+          li {
+            padding: 0 20px;
+            margin: 0;
+          }
+
           .sub-submenu {
             display: none;
             position: absolute;
             padding: 10px;
             top: 0;
-            left: 130px;
-            border-left: 1px solid lightgrey;
-            a {
-              visibility: hidden;
-            }
+            left: 98px;
+            border: 1px solid lightgrey;
+            background-color: white;
           }
         }
 
-        .wide {
-          width: 270px;
-        }
-
-        .concerts {
-          height: 275px;
-        }
-
-        .sports {
-          height: 245px;
+        .arts-theater,
+        .other-tickets {
+          width: 150px;
         }
       }
 
@@ -131,15 +132,13 @@ header {
       }
 
       .main-nav li:hover .sub-menu,
-      .main-nav li:hover .sub-submenu,
       .main-nav .sub-menu:hover,
-      .main-nav .sub-menu:hover .sub-submenu,
       .main-nav .sub-submenu:hover {
         display: inline-block;
       }
 
-      .main-nav li:hover > .sub-submenu a {
-        visibility: visible;
+      .main-nav li:hover > .sub-submenu {
+        display: inline-block;
       }
     }
   }

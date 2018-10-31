@@ -1,6 +1,9 @@
 <?php
 
 Route::get('/', 'LandingPageController@index')->name('landing-page');
+Route::post('/currentlocation', 'LandingPageController@current');
+Route::post('/inputlocation', 'LandingPageController@input');
+
 Route::get('/about', 'StaticPageController@about');
 Route::get('/terms', 'StaticPageController@terms');
 Route::get('/privacy', 'StaticPageController@privacy');

@@ -7,7 +7,7 @@
 .landing-header {
     width: 100%;
     min-height: 100vh;
-    padding: 200px 0;
+    padding: 200px 0 40px; 
 
     video {
         position: absolute;
@@ -263,6 +263,15 @@
             width: 32%;
             margin-right: 1.33333%;
             box-shadow: 0 3px 7px 2px rgba(0, 0, 0, 0.2);
+
+            span {
+                font-size: 14px;
+                text-decoration: underline;
+                padding-right: 20px;
+                float: right;
+                padding-bottom: 10px;
+                color: #E81C40;
+            }
         }
 
         .post-img {
@@ -276,20 +285,12 @@
             color: #2FA9DD;
             font-size: 24px;
             padding: 10px 20px 0;
+            line-height: 30px;
         }
 
         p {
             margin-bottom: 0;
             padding: 0 20px 10px;
-        }
-
-        a {
-            font-size: 14px;
-            text-decoration: underline;
-            padding-right: 20px;
-            float: right;
-            padding-bottom: 10px;
-            color: #E81C40;
         }
     }
 }
@@ -297,6 +298,10 @@
 @media only screen and (max-width: 1300px) {
     .short-promos .single-short-promo .text {
         height: 360px;
+    }
+
+    .landing-header .text > h1 {
+        padding: 0;
     }
 }
 @media only screen and (max-width: 1100px) {
@@ -313,6 +318,10 @@
     .long-promos .single-long-promo .text .subheader,
     .long-promos .single-long-promo .text h2 {
         margin-bottom: 5px;
+    }
+
+    .landing-header .text > h1 {
+        padding: 0;
     }
 }
 
@@ -336,6 +345,10 @@
 }
 
 @media only screen and (max-width: 900px) {
+    .landing-header .text > h1 {
+        color: #12A8DE;
+    }
+
     .long-promos .single-long-promo .promo-img {
         width: 100%;
     }

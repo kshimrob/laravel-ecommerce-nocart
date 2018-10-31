@@ -7,22 +7,22 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    height: 350px;
+    padding: 210px 0 10px;
   }
 
   h1 {
-    position: absolute;
+    position: relative;
     color: white;
     padding: 0 100px;
     bottom: 0;
     text-transform: uppercase;
     font: bold 54px 'Roboto Condensed', sans-serif;
     z-index: 2;
+    margin-top: 10px;
   }
 
   .single-post-categories {
-    position: absolute;
-    bottom: 90px;
+    position: relative;
     padding: 0 100px;
     width: 100%;
     z-index: 2;
@@ -47,8 +47,7 @@
   content: '';
   width: 100%;
   display: inline-block;
-  height: 350px;
-  margin-top: 100px;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 1;
   position: absolute;
@@ -98,7 +97,7 @@
 }
 
 @media only screen and (max-width: 1200px) {
-  .header-container h1 {
+  .header-container.blog-post h1 {
     font-size: 40px;
   }
 
@@ -109,18 +108,19 @@
 }
 
 @media only screen and (max-width: 900px) {
-  .header-container .single-post-categories {
-    position: static;
-    padding: 20px;
+  .header-container.blog-post h1 {
+    padding: 0 20px;
+  }
+  .header-container.blog-post .single-post-categories {
+    padding: 0 20px;
   }
 
-  .header-container h1 {
-    position: static;
-    color: black;
+  .header-container.blog-post .blog-header {
+    padding: 80px 0 10px;
   }
 
   .header-container + .container {
-    padding: 0 20px 20px;
+    padding: 20px;
   }
 
   .post-info,
@@ -132,9 +132,5 @@
 
   .header-container .single-post-categories a {
     margin-bottom: 10px;
-  }
-
-  .blog-header::after {
-    display: none;
   }
 }

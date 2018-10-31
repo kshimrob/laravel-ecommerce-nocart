@@ -4,13 +4,13 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <meta name="description" content="@yield('description')">
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>Laravel Ecommerce | @yield('title', '')</title>
+        <title>@yield('title', '') | Tix4Cause</title>
 
-        <link href="/img/favicon.ico" rel="SHORTCUT ICON" />
+        <link href="{{{ asset('img/favicon.png') }}}" rel="SHORTCUT ICON" />
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,700|Roboto+Condensed:700" rel="stylesheet">
