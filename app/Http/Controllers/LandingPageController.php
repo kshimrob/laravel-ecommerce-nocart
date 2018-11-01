@@ -10,6 +10,7 @@ use GeoIP as GeoIP;
 use Khsing\World\Models\City;
 use Khsing\World\Models\Division;
 use Khsing\World\Models\Country;
+use Khsing\World\Models\DivisionLocale;
 use Khsing\World\World;
 
 class LandingPageController extends Controller
@@ -48,29 +49,81 @@ class LandingPageController extends Controller
             ]);
     }
 
+    // NOTE THAT STATE IS INTERCHANGEABLE WITH DIVISION
     public function input(Request $request) {
-        $userInput = $request->userInput;
-
-        $city = City::getByName($userInput);
-        // if ($city['division_id'] !== null) {
-        //     $state = $city->division()->first();
-        //     $state = $state->name;
-        // } else {
-        //     $state = null;
-        // }
+        $cityInput = $request->cityInput;
+        $stateInput = $request->stateInput;
+        $city = City::getByName($cityInput);
 
         if (is_null($city)) {
+            // If city name doesn't match in system then return null for all values
             $country = null;
             $state = null;
-        } else {
+        } elseif (empty($stateInput)) {
+            // if state isn't inputted by user
             $country = $city->country()->first()->name;
+
             if ($city->division()->first()) {
                 $state = $city->division()->first()->name;
             } else {
                 $state = null;
             }
+
             $city = $city->name;
+        } else {
+            // match state code (i.e. 'IL') or state name
+            if (strlen($stateInput) <= 2) {
+                $state = Division::where('code', strtolower($stateInput))->first();
+            } else {
+                $state = Division::where('name', ucwords(strtolower($stateInput)))->first();
+            }
+
+            // see if city exists in the given state
+            // if state is null, only check out city
+            if (is_null($state)) {
+                $country = $city->country()->first()->name;
+
+                if ($city->division()->first()) {
+                    $state = $city->division()->first()->name;
+                } else {
+                    $state = null;
+                }
+    
+                $city = $city->name;
+            } else {
+                $allCities = City::where('name', $city->name)->get();
+                $stateId = $state['id'];
+                $stateCityMatch = false;
+
+                // go through each city that has the same name and see if 
+                // a city's state id matches the inputted state Id.
+                // if no match, ignore state.
+                foreach ($allCities as $singleCity) {
+                    if ($singleCity['division_id'] === $stateId) {
+                        $city = $singleCity;
+                        $stateCityMatch = true;
+                    }
+                }
+
+                if ($stateCityMatch) {
+                    $country = $city->country()->first()->name;
+                    $city = $city->name;
+                    $state = $state['name'];
+                } else {
+                    $country = $city->country()->first()->name;
+
+                    if ($city->division()->first()) {
+                        $state = $city->division()->first()->name;
+                    } else {
+                        $state = null;
+                    }
+        
+                    $city = $city->name;
+                }
+                
+            }
         }
+
 
         return response()->json([
             'city'=> $city,

@@ -18,22 +18,24 @@
       <div class="top-nav-right">
             <div class="nav-location">
                 @if($state) 
-                    <a href="" id="user-location">{{ $city }}, {{ $state }}, {{ $country }}</a>
+                    <a id="user-location">{{ $city }}, {{ $state }}, {{ $country }}</a>
                 @else
-                    <a href="" id="user-location">{{ $city }}, {{ $country }}</a>
+                    <a id="user-location">{{ $city }}, {{ $country }}</a>
                 @endif
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path style="fill: #12A8DE" d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/></svg>
                 <div id="location-dropdown">
                     <button id="current-location">Get Current Location</button>
-                    <a href="" id="city-input-toggle">Enter City</a>
+                    <a id="city-input-toggle">Enter City</a>
                     <div id="city-input-container">
                             <p id="close-btn">&times;</p>
-                            <label for="city-input">City</label>
+                            <label for="city-input" required>City*</label>
                             <input type="text" placeholder="Enter city" id="city-input">
+                            <p id="nav-error-message">The city name is invalid.</p>
+                            <label for="state-input">State</label>
+                            <input type="text" placeholder="Enter state" id="state-input">
                             <button type="submit" id="change-location">Change Location</button>
-                            <p id="nav-error-message"></p>
                     </div>
                 </div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path style="fill: #12A8DE" d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/></svg>
             </div>
             <ul class="main-nav">
                 <li>
@@ -228,7 +230,7 @@
         !!userState ? $('#user-location').html(`${userCity}, ${userState}, ${userCountry}`) : $('#user-location').html(`${userCity}, ${userCountry}`);
     }
 
-    // current location finder
+    // CURRENT LOCATION FINDER
     $('#current-location').click(function(e){
         e.preventDefault();
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -239,6 +241,9 @@
                      _token: CSRF_TOKEN,
                   },
                   success: function(result){
+                      // close the div
+                      $('#location-dropdown').hide();
+
                       // reflect it in the navigation
                       if (result['state']) {
                         $('#user-location').html(result['city'] + ', ' + result['state'] + ', ' + result['country']);
@@ -252,25 +257,45 @@
                       if (result['state']) {
                           window.localStorage.setItem('state', result['state']);
                       }
+
                   }
                      
         });
     });
 
-    // input location finder
+    // EDIT LOCATION DROPDOWN
+    // open and close dropdown on click
+    $('#user-location').click(function(){
+        $('#location-dropdown').toggle();
+    });
+
+    // INPUT LOCATION FINDER
+    // open finder on click
+    $('#city-input-toggle').click(function(){
+        $('#city-input-container').show();
+    });
+
+    // close finder on click
+    $('#close-btn').click(function(){
+        $('#city-input-container').hide();
+    })
+
+    // functionality
     $('#change-location').click(function(e){
         e.preventDefault();
-        var userInput = $('#city-input').val();
+        var cityInput = $('#city-input').val();
+        var stateInput = $('#state-input').val();
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
         jQuery.ajax({
             url: "{{ url('/inputlocation') }}",
                   method: 'post',
                   data: {
                      _token: CSRF_TOKEN,
-                     'userInput': userInput,
+                     'cityInput': cityInput,
+                     'stateInput': stateInput,
                   },
                   success: function(result){
-                      // if city matches
                         if (result['city']) {
                             // reflect it in the navigation
                             if (result['state']) {
@@ -285,10 +310,17 @@
                             if (result['state']) {
                                 window.localStorage.setItem('state', result['state']);
                             }
+
+                            // close div and remove any error indications
+                            $('#nav-error-message').hide();
+                            $('#city-input').removeClass('error-input');
+                            $('#city-input-container').hide();
+                            $('#location-dropdown').hide();
                         } else {
-                            console.log('nah');
+                            // display error message and error styling
+                            $('#nav-error-message').show();
+                            $('#city-input').addClass('error-input');
                         }
-                     // else no match then show error message
                   }
         });
     });
